@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: ns-sigemad
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: localhost:32001/sigemad-frontend:develop-7c8dcb20ba0ddc5631c5602127dc3f7ecf3ffa05
+          ports:
+            - containerPort: 80
+          #volumeMounts:
+            #- name: nginx-html
+              #mountPath: /usr/share/nginx/html
+      #volumes:
+        #- name: nginx-html
+          #emptyDir: {}
