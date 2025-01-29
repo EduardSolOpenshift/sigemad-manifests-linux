@@ -19,16 +19,18 @@ spec:
         ports:
           - containerPort: 8080
         env:
-          - name: INSTALL_EXTENSIONS
-            value: "true"
-          - name: STABLE_EXTENSIONS
-            value: "sqlserver"
-          - name: GEOSERVER_ADMIN_USER
-            value: "admin"
-          - name: GEOSERVER_ADMIN_PASSWORD
-            value: "sigemad"
-          - name: PROXY_BASE_URL
-            value: "https://geoserver.sigemad.duckdns.org/geoserver"
+        - name: GEOSERVER_ADMIN_USER
+          value: "admin"
+        - name: GEOSERVER_ADMIN_PASSWORD
+          value: "sigemad"
+        - name: PROXY_BASE_URL
+          value: "https://geoserver.sigemad.duckdns.org/geoserver"
+        - name: INSTALL_EXTENSIONS
+          value: "true"
+        - name: STABLE_EXTENSIONS
+          value: "sqlserver"
+        - name: SKIP_DEMO_DATA
+          value: "true"   # si no quieres datos de ejemplo
         volumeMounts:
           - name: geoserver-data
             mountPath: /opt/geoserver_data
