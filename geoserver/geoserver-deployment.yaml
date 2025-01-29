@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: geoserver
-  namespace: ns-sigemad
+  namespace: ns-sigemad-release
 spec:
   replicas: 1
   selector:
@@ -14,20 +14,22 @@ spec:
         app: geoserver
     spec:
       containers:
-        - name: geoserver
-          image: kartoza/geoserver:2.25.2
-          ports:
-            - containerPort: 8080
-          env:
-            - name: GEOSERVER_ADMIN_USER
-              value: admin
-            - name: GEOSERVER_ADMIN_PASSWORD
-              value: GEOtest1
-            - name: SAMPLE_DATA
-              value: "true" # Habilita los datos de prueba
-          volumeMounts:
-            - name: geoserver-data
-              mountPath: /var/local/geoserver
+      - name: geoserver
+        image: docker.osgeo.org/geoserver:2.26.1
+        ports:
+          - containerPort: 8080
+        env:
+          - name: INSTALL_EXTENSIONS
+            value: "true"
+          - name: STABLE_EXTENSIONS
+            value: "sqlserver"
+          - name: GEOSERVER_ADMIN_USER
+            value: "admin"
+          - name: GEOSERVER_ADMIN_PASSWORD
+            value: "sigemad"
+        volumeMounts:
+          - name: geoserver-data
+            mountPath: /opt/geoserver_data
       volumes:
         - name: geoserver-data
           persistentVolumeClaim:
