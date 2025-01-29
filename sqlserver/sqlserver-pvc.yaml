@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: docker-registry-pvc
-  namespace: ns-sigemad-pipeline
+  namespace: ns-sigemad
 spec:
   accessModes:
     - ReadWriteOnce
