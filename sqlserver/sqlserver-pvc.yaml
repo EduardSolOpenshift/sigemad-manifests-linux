@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: docker-registry-pvc
+  name: pvc-sqlserver
   namespace: ns-sigemad-release
 spec:
   accessModes:
