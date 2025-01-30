@@ -33,6 +33,8 @@ spec:
             value: "true"
           - name: GEOSERVER_CSRF_DISABLED
             value: "true"
+          - name: EXTRA_JAVA_OPTS
+            value: "-Dorg.geotools.coverage.jaiext.enabled=true"
         volumeMounts:
           - name: geoserver-data
             mountPath: /opt/geoserver_data
