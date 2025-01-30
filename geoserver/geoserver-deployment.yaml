@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: geoserver
-        image: kartoza/geoserver:2.26.1
+        image: docker.osgeo.org/geoserver:2.26.2
         ports:
           - containerPort: 8080
         env:
