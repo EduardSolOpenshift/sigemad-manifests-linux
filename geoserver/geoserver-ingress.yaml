@@ -9,7 +9,7 @@ metadata:
     # Otras anotaciones si quieres reescritura, SSL, etc.
 spec:
   rules:
-  - host: geoserver.sigemad.duckdns.org
+  - host: geoserver-sigemad.duckdns.org
     http:
       paths:
       - path: /geoserver(/|$)(.*)
