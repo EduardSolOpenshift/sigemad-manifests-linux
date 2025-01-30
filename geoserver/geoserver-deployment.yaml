@@ -1,4 +1,3 @@
-# geoserver-deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -20,15 +19,28 @@ spec:
         ports:
           - containerPort: 8080
         env:
-          # Opcional: si quieres credenciales distintas al default
           - name: GEOSERVER_ADMIN_USER
             value: "admin"
           - name: GEOSERVER_ADMIN_PASSWORD
             value: "sigemad"
+          - name: PROXY_BASE_URL
+            value: "https://geoserver.sigemad.duckdns.org/geoserver"
+          - name: INSTALL_EXTENSIONS
+            value: "true"
+          - name: STABLE_EXTENSIONS
+            value: "sqlserver"
+          - name: SKIP_DEMO_DATA
+            value: "true"
         volumeMounts:
           - name: geoserver-data
             mountPath: /opt/geoserver_data
+          - name: geoserver-global-override
+            mountPath: /opt/geoserver_data/global.xml
+            subPath: global.xml
       volumes:
         - name: geoserver-data
           persistentVolumeClaim:
             claimName: pvc-geoserver
+        - name: geoserver-global-override
+          configMap:
+            name: geoserver-global-cm
