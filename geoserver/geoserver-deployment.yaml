@@ -19,22 +19,39 @@ spec:
         ports:
           - containerPort: 8080
         env:
-        - name: GEOSERVER_ADMIN_USER
-          value: "admin"
-        - name: GEOSERVER_ADMIN_PASSWORD
-          value: "sigemad"
-        - name: PROXY_BASE_URL
-          value: "https://geoserver.sigemad.duckdns.org/geoserver"
-        - name: INSTALL_EXTENSIONS
-          value: "true"
-        - name: STABLE_EXTENSIONS
-          value: "sqlserver"
-        - name: SKIP_DEMO_DATA
-          value: "true"   # si no quieres datos de ejemplo
+          - name: GEOSERVER_ADMIN_USER
+            value: "admin"
+          - name: GEOSERVER_ADMIN_PASSWORD
+            value: "sigemad"
+          - name: PROXY_BASE_URL
+            value: "https://geoserver.sigemad.duckdns.org/geoserver"
+          - name: INSTALL_EXTENSIONS
+            value: "true"
+          - name: STABLE_EXTENSIONS
+            value: "sqlserver"
+          - name: SKIP_DEMO_DATA
+            value: "true"
         volumeMounts:
           - name: geoserver-data
             mountPath: /opt/geoserver_data
+          # -------------------------------
+          # AÑADE ESTAS LÍNEAS PARA MONTAR global.xml
+          # -------------------------------
+          - name: geoserver-global-override
+            mountPath: /opt/config_overrides/global.xml
+            subPath: global.xml
       volumes:
         - name: geoserver-data
           persistentVolumeClaim:
             claimName: pvc-geoserver
+        # -------------------------------
+        # AÑADE ESTE VOLUMEN CON EL CONFIGMAP
+        # -------------------------------
+        - name: geoserver-global-override
+          configMap:
+            name: geoserver-global-cm
+            # Opcionalmente, si tuvieras varias claves en el ConfigMap
+            # y solo quieres montar una de ellas:
+            # items:
+            #   - key: global.xml
+            #     path: global.xml
