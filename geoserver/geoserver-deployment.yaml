@@ -31,6 +31,8 @@ spec:
             value: "sqlserver"
           - name: SKIP_DEMO_DATA
             value: "true"
+          - name: GEOSERVER_CSRF_DISABLED
+            value: "true"
         volumeMounts:
           - name: geoserver-data
             mountPath: /opt/geoserver_data
