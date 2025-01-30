@@ -37,6 +37,9 @@ spec:
           - name: geoserver-global-override
             mountPath: /opt/geoserver_data/global.xml
             subPath: global.xml
+          - name: override-server-xml
+            mountPath: /opt/config_overrides/server.xml
+            subPath: server.xml
       volumes:
         - name: geoserver-data
           persistentVolumeClaim:
@@ -44,3 +47,6 @@ spec:
         - name: geoserver-global-override
           configMap:
             name: geoserver-global-cm
+        - name: override-server-xml
+          configMap:
+            name: tomcat-server-xml-cm
