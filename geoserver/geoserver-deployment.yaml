@@ -38,7 +38,7 @@ spec:
             mountPath: /opt/geoserver_data/global.xml
             subPath: global.xml
           - name: override-server-xml
-            mountPath: /opt/config_overrides/server.xml
+            mountPath: /opt/config/server.xml
             subPath: server.xml
       volumes:
         - name: geoserver-data
