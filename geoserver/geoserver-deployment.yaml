@@ -15,22 +15,36 @@ spec:
     spec:
       containers:
       - name: geoserver
-        image: docker.osgeo.org/geoserver:2.26.1
+        image: localhost:32001/geoserver-fontconfig:2.26.2-v4
         ports:
           - containerPort: 8080
         env:
-          - name: INSTALL_EXTENSIONS
-            value: "true"
-          - name: STABLE_EXTENSIONS
-            value: "sqlserver"
           - name: GEOSERVER_ADMIN_USER
             value: "admin"
           - name: GEOSERVER_ADMIN_PASSWORD
             value: "sigemad"
+          - name: PROXY_BASE_URL
+            value: "https://geoserver-release.sigemad.duckdns.org/geoserver"
+          - name: INSTALL_EXTENSIONS
+            value: "true"
+          - name: STABLE_EXTENSIONS
+            value: "sqlserver"
+          - name: SKIP_DEMO_DATA
+            value: "true"
+          - name: GEOSERVER_CSRF_DISABLED
+            value: "true"
+          - name: EXTRA_JAVA_OPTS
+            value: "-Dorg.geotools.coverage.jaiext.enabled=true"
         volumeMounts:
           - name: geoserver-data
             mountPath: /opt/geoserver_data
+          - name: geoserver-global-override
+            mountPath: /opt/geoserver_data/global.xml
+            subPath: global.xml
       volumes:
         - name: geoserver-data
           persistentVolumeClaim:
             claimName: pvc-geoserver
+        - name: geoserver-global-override
+          configMap:
+            name: geoserver-global-cm
