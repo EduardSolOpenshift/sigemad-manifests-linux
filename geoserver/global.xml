@@ -1,0 +1,9 @@
+<global>
+  <!-- Ajusta la URL pública tras tu proxy/túnel -->
+  <proxyBaseUrl>https://geoserver.sigemad.duckdns.org/geoserver</proxyBaseUrl>
+  
+  <!-- Si deseas que GeoServer confíe en las cabeceras X-Forwarded-* -->
+  <useHeadersProxyURL>true</useHeadersProxyURL>
+  
+  <!-- Opcional: otros ajustes que quieras forzar -->
+</global>
