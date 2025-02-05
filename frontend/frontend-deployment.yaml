@@ -18,9 +18,11 @@ spec:
           image: localhost:32001/sigemad-frontend:develop-535da4e2d09fef9cd7c0d00e2abf0f3bae68cba5
           ports:
             - containerPort: 80
-          #volumeMounts:
-            #- name: nginx-html
-              #mountPath: /usr/share/nginx/html
-      #volumes:
-        #- name: nginx-html
-          #emptyDir: {}
+          volumeMounts:
+            - name: config-volume
+              mountPath: /usr/share/nginx/html/assets/config.json
+              subPath: config.json
+      volumes:
+        - name: config-volume
+          configMap:
+            name: angular-config
