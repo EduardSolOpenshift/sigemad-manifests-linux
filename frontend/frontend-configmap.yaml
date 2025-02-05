@@ -1,1 +1,12 @@
-
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: angular-config
+  namespace: ns-sigemad
+data:
+  config.json: |
+    {
+      production: true,
+      urlBase: 'https://develop.sigemad.duckdns.org/api/v1',
+      urlGeoserver: 'https://geoserver.sigemad.duckdns.org/geoserver/sigemad/',
+    }
