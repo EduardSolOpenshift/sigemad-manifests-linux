@@ -41,6 +41,9 @@ spec:
           - name: geoserver-global-override
             mountPath: /opt/geoserver_data/global.xml
             subPath: global.xml
+          - name: geoserver-webxml-cors
+            mountPath: /usr/local/tomcat/webapps/geoserver/WEB-INF/web.xml
+            subPath: web.xml
       volumes:
         - name: geoserver-data
           persistentVolumeClaim:
@@ -48,3 +51,6 @@ spec:
         - name: geoserver-global-override
           configMap:
             name: geoserver-global-cm
+        - name: geoserver-webxml-cors
+          configMap:
+            name: geoserver-webxml-cors
