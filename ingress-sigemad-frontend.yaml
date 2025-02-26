@@ -8,7 +8,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /$1
 spec:
   rules:
-    - host: develop.sigemad.duckdns.org
+    - host: developp.sigemad.duckdns.org
       http:
         paths:
           - path: /geoserver/(.*)
