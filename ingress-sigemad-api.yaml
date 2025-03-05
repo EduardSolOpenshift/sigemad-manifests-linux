@@ -9,7 +9,7 @@ metadata:
     # nginx.ingress.kubernetes.io/rewrite-target: /api/$1
 spec:
   rules:
-    - host: developp.sigemad.duckdns.org
+    - host: develop.sigemad.duckdns.org
       http:
         paths:
           - path: /swagger(/.*)?
