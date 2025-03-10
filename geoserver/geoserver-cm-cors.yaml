@@ -1,0 +1,235 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: geoserver-webxml-cors
+  namespace: ns-sigemad-release
+data:
+  web.xml: |-
+    <?xml version="1.0" encoding="UTF-8"?>
+    <web-app
+            xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+            metadata-complete="false"
+            version="3.1">
+        <display-name>GeoServer</display-name>
+
+        <context-param>
+            <param-name>serviceStrategy</param-name>
+            <!-- Valores posibles: PARTIAL-BUFFER2, BUFFER, SPEED, FILE -->
+            <param-value>PARTIAL-BUFFER2</param-value>
+        </context-param>
+
+        <context-param>
+            <param-name>PARTIAL_BUFFER_STRATEGY_SIZE</param-name>
+            <param-value>50</param-value>
+        </context-param>
+
+        <!-- (Opcional) Configuración para habilitar JSONP
+        <context-param>
+          <param-name>ENABLE_JSONP</param-name>
+          <param-value>true</param-value>
+        </context-param>
+        -->
+        <!-- (Opcional) Configuración del PROXY_BASE_URL
+        <context-param>
+          <param-name>PROXY_BASE_URL</param-name>
+          <param-value>http://82.58.146.45/geoserver</param-value>
+        </context-param>
+        -->
+        <!-- (Opcional) Configuración del GEOSERVER_DATA_DIR
+       <context-param>
+          <param-name>GEOSERVER_DATA_DIR</param-name>
+          <param-value>C:\ruta\a\geoserver_data</param-value>
+       </context-param>
+       -->
+
+        <!-- Carga de contextos Spring -->
+        <context-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath*:/applicationContext.xml classpath*:/applicationSecurityContext.xml</param-value>
+        </context-param>
+
+        <filter>
+            <filter-name>FlushSafeFilter</filter-name>
+            <filter-class>org.geoserver.filters.FlushSafeFilter</filter-class>
+        </filter>
+
+        <filter>
+            <filter-name>Set Character Encoding</filter-name>
+            <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+            <init-param>
+                <param-name>encoding</param-name>
+                <param-value>UTF-8</param-value>
+            </init-param>
+        </filter>
+
+        <filter>
+            <filter-name>SessionDebugger</filter-name>
+            <filter-class>org.geoserver.filters.SessionDebugFilter</filter-class>
+        </filter>
+
+        <filter>
+            <filter-name>filterChainProxy</filter-name>
+            <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+        </filter>
+
+        <filter>
+            <filter-name>xFrameOptionsFilter</filter-name>
+            <filter-class>org.geoserver.filters.XFrameOptionsFilter</filter-class>
+        </filter>
+
+        <filter>
+            <filter-name>GZIP Compression Filter</filter-name>
+            <filter-class>org.geoserver.filters.GZIPFilter</filter-class>
+            <init-param>
+                <!-- Lista separada por comas de expresiones regulares para comprimir mime types -->
+                <param-name>compressed-types</param-name>
+                <param-value>text/.*,.*xml.*,application/json,application/x-javascript</param-value>
+            </init-param>
+        </filter>
+
+        <filter>
+            <filter-name>Advanced Dispatch Filter</filter-name>
+            <filter-class>org.geoserver.platform.AdvancedDispatchFilter</filter-class>
+        </filter>
+
+        <filter>
+            <filter-name>Spring Delegating Filter</filter-name>
+            <filter-class>org.geoserver.filters.SpringDelegatingFilter</filter-class>
+        </filter>
+
+        <filter>
+            <filter-name>Thread locals cleanup filter</filter-name>
+            <filter-class>org.geoserver.filters.ThreadLocalsCleanupFilter</filter-class>
+        </filter>
+
+        <!-- ***** Habilitación de CORS ***** -->
+        <filter>
+           <filter-name>cross-origin</filter-name>
+           <filter-class>org.apache.catalina.filters.CorsFilter</filter-class>
+           <init-param>
+             <param-name>cors.allowed.origins</param-name>
+             <param-value>*</param-value>
+           </init-param>
+           <init-param>
+             <param-name>cors.allowed.methods</param-name>
+             <param-value>GET,POST,PUT,DELETE,HEAD,OPTIONS</param-value>
+           </init-param>
+           <init-param>
+             <param-name>cors.allowed.headers</param-name>
+             <param-value>*</param-value>
+           </init-param>
+        </filter>
+
+        <!-- Este mapeo DEBE ir antes de otros (véase note en Tomcat) -->
+        <filter-mapping>
+            <filter-name>Set Character Encoding</filter-name>
+            <url-pattern>/*</url-pattern>
+        </filter-mapping>
+
+        <!-- Mapeo del filtro CORS -->
+        <filter-mapping>
+            <filter-name>cross-origin</filter-name>
+            <url-pattern>/*</url-pattern>
+        </filter-mapping>
+        <!-- ******************************** -->
+
+        <filter-mapping>
+            <filter-name>FlushSafeFilter</filter-name>
+            <url-pattern>/*</url-pattern>
+        </filter-mapping>
+
+        <filter-mapping>
+            <filter-name>SessionDebugger</filter-name>
+            <url-pattern>/*</url-pattern>
+        </filter-mapping>
+
+        <filter-mapping>
+            <filter-name>GZIP Compression Filter</filter-name>
+            <url-pattern>/*</url-pattern>
+        </filter-mapping>
+
+        <filter-mapping>
+            <filter-name>xFrameOptionsFilter</filter-name>
+            <url-pattern>/*</url-pattern>
+        </filter-mapping>
+
+        <filter-mapping>
+            <filter-name>filterChainProxy</filter-name>
+            <url-pattern>/*</url-pattern>
+        </filter-mapping>
+
+        <filter-mapping>
+            <filter-name>Advanced Dispatch Filter</filter-name>
+            <url-pattern>/*</url-pattern>
+        </filter-mapping>
+
+        <filter-mapping>
+            <filter-name>Spring Delegating Filter</filter-name>
+            <url-pattern>/*</url-pattern>
+        </filter-mapping>
+
+        <filter-mapping>
+            <filter-name>Thread locals cleanup filter</filter-name>
+            <url-pattern>/*</url-pattern>
+        </filter-mapping>
+
+        <!-- Listeners -->
+        <listener>
+            <listener-class>org.geoserver.GeoserverInitStartupListener</listener-class>
+        </listener>
+        <listener>
+            <listener-class>org.geoserver.logging.LoggingStartupContextListener</listener-class>
+        </listener>
+        <listener>
+            <listener-class>org.geoserver.platform.GeoServerContextLoaderListener</listener-class>
+        </listener>
+        <listener>
+            <listener-class>org.geoserver.platform.GeoServerHttpSessionListenerProxy</listener-class>
+        </listener>
+        <listener>
+            <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+        </listener>
+
+        <!-- Servlet de Spring -->
+        <servlet>
+            <servlet-name>dispatcher</servlet-name>
+            <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        </servlet>
+        <servlet-mapping>
+            <servlet-name>dispatcher</servlet-name>
+            <url-pattern>/*</url-pattern>
+        </servlet-mapping>
+
+        <session-config>
+            <cookie-config>
+                <http-only>true</http-only>
+                <!-- Descomenta la siguiente línea para agregar el flag Secure -->
+                <!-- <secure>true</secure> -->
+            </cookie-config>
+            <tracking-mode>COOKIE</tracking-mode>
+        </session-config>
+
+        <mime-mapping>
+            <extension>xsl</extension>
+            <mime-type>text/xml</mime-type>
+        </mime-mapping>
+        <mime-mapping>
+            <extension>sld</extension>
+            <mime-type>text/xml</mime-type>
+        </mime-mapping>
+        <mime-mapping>
+            <extension>json</extension>
+            <mime-type>application/json</mime-type>
+        </mime-mapping>
+        <mime-mapping>
+            <extension>yaml</extension>
+            <mime-type>text/plain</mime-type>
+        </mime-mapping>
+
+        <welcome-file-list>
+            <welcome-file>index.html</welcome-file>
+        </welcome-file-list>
+
+    </web-app>
