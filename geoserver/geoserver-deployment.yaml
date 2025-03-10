@@ -48,3 +48,6 @@ spec:
         - name: geoserver-global-override
           configMap:
             name: geoserver-global-cm
+        - name: geoserver-webxml-cors
+          configMap:
+            name: geoserver-webxml-cors
