@@ -7,6 +7,6 @@ data:
   config.json: |
     {
       "production": true,
-      "urlBase": "https://release.sigemad.duckdns.org/api/v1",
+      "urlBase": '/api/v1',
       "urlGeoserver": "https://geoserver-release.sigemad.duckdns.org/geoserver/sigemad/"
     }
