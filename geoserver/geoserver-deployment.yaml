@@ -35,6 +35,8 @@ spec:
             value: "true"
           - name: EXTRA_JAVA_OPTS
             value: "-Dorg.geotools.coverage.jaiext.enabled=true"
+          - name: TZ
+            value: "Europe/Madrid"
         volumeMounts:
           - name: geoserver-data
             mountPath: /opt/geoserver_data
