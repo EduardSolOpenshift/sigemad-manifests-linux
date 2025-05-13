@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: localhost:32001/sigemad-backend:develop-9dabf95a8e75547a8165149bab6b72d9f1e5ae25
+          image: localhost:32001/sigemad-backend:develop-6feb03b1524be0e1ac4de76dbf01123a0d5d2fd6
           ports:
             - containerPort: 8080
           env:
