@@ -24,6 +24,6 @@ spec:
             - name: ASPNETCORE_URLS
               value: "http://+:8080"
             - name: ConnectionStrings__ConnectionString
-              value: "Data Source=sqlserver.ns-sigemad-release.svc.cluster.local,1433;Initial Catalog=Sigemad;user id=sa;password=P@s$w0rd;TrustServerCertificate=true;MultipleActiveResultSets=true;"
+              value: "Data Source=sqlserver.ns-sigemad-release.svc.cluster.local,1433;Initial Catalog=Sigemad1;user id=sa;password=P@s$w0rd;TrustServerCertificate=true;MultipleActiveResultSets=true;"
             - name: ConnectionStrings__IdentityConnectionString
-              value: "Data Source=sqlserver.ns-sigemad-release.svc.cluster.local,1433;Initial Catalog=Sigemad;user id=sa;password=P@s$w0rd;TrustServerCertificate=true;MultipleActiveResultSets=true;"
+              value: "Data Source=sqlserver.ns-sigemad-release.svc.cluster.local,1433;Initial Catalog=Sigemad1;user id=sa;password=P@s$w0rd;TrustServerCertificate=true;MultipleActiveResultSets=true;"
