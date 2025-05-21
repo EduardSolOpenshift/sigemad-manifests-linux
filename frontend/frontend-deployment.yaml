@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: localhost:32001/sigemad-frontend:develop-72d1ac335eed99616727b5ee252f0e2276eb25fa
+          image: localhost:32001/sigemad-frontend:develop-42c0d3a266ec7be6a86475627ef2efaaaeee738d
           ports:
             - containerPort: 80
           volumeMounts:
