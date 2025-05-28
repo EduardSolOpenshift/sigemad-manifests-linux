@@ -8,7 +8,7 @@ spec:
     app: sqlserver
   ports:
     - protocol: TCP
-      port: 1433
+      port: 1434
       targetPort: 1433
       nodePort: 31433  # Puedes elegir un puerto entre 30000 y 32767
   type: NodePort
