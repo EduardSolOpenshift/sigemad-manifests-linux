@@ -15,32 +15,38 @@ spec:
         app: sqlserver
     spec:
       initContainers:
-        - name: init-permissions
-          image: busybox
-          command: ["sh", "-c", "chown -R 10001:0 /var/opt/mssql"]
-          volumeMounts:
-            - name: mssql-data
-              mountPath: /var/opt/mssql
-      containers:
-        - name: sqlserver
-          image: mcr.microsoft.com/mssql/server:2022-latest
-          ports:
-            - containerPort: 1434 #puerto DB
-              name: sql
-          env:
-            - name: ACCEPT_EULA
-              value: "Y"
-            - name: TZ
-              value: "Europe/Madrid"
-            - name: SA_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: secret-sqlserver
-                  key: SA_PASSWORD
-          volumeMounts:
-            - name: mssql-data
-              mountPath: /var/opt/mssql
-      volumes:
+      - name: init-permissions
+        image: busybox
+        command:
+          - sh
+          - -c
+          - |
+            # crea el directorio de backup y ajusta permisos
+            mkdir -p /var/opt/mssql/backup
+            chown -R 10001:0 /var/opt/mssql
+        volumeMounts:
         - name: mssql-data
-          persistentVolumeClaim:
-            claimName: pvc-sqlserver
+          mountPath: /var/opt/mssql
+      containers:
+      - name: sqlserver
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        ports:
+        - containerPort: 1434
+          name: sql
+        env:
+        - name: ACCEPT_EULA
+          value: "Y"
+        - name: TZ
+          value: "Europe/Madrid"
+        - name: SA_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: secret-sqlserver
+              key: SA_PASSWORD
+        volumeMounts:
+        - name: mssql-data
+          mountPath: /var/opt/mssql
+      volumes:
+      - name: mssql-data
+        persistentVolumeClaim:
+          claimName: pvc-sqlserver
