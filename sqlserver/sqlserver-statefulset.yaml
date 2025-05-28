@@ -31,7 +31,7 @@ spec:
       - name: sqlserver
         image: mcr.microsoft.com/mssql/server:2022-latest
         ports:
-        - containerPort: 1433
+        - containerPort: 1434
           name: sql
         env:
         - name: ACCEPT_EULA
