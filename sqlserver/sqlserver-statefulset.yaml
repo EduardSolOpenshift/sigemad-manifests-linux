@@ -6,10 +6,12 @@ metadata:
 spec:
   serviceName: sqlserver
   replicas: 1
+
   selector:
     matchLabels:
       app: sqlserver
-  template:
+
+  template:                      # <— aquí debe ir el PodTemplate
     metadata:
       labels:
         app: sqlserver
@@ -17,7 +19,7 @@ spec:
       initContainers:
         - name: init-permissions
           image: busybox
-          command: ["sh", "-c", "chown -R 10001:0 /var/opt/mssql"]
+          command: ["sh","-c","chown -R 10001:0 /var/opt/mssql"]
           volumeMounts:
             - name: mssql-data
               mountPath: /var/opt/mssql
@@ -25,7 +27,7 @@ spec:
         - name: sqlserver
           image: mcr.microsoft.com/mssql/server:2022-latest
           ports:
-            - containerPort: 1433 #puerto DB
+            - containerPort: 1433
               name: sql
           env:
             - name: ACCEPT_EULA
@@ -44,3 +46,6 @@ spec:
         - name: mssql-data
           persistentVolumeClaim:
             claimName: pvc-sqlserver
+
+  updateStrategy:
+    type: RollingUpdate
