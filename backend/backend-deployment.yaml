@@ -27,3 +27,5 @@ spec:
               value: "Data Source=sqlserver.ns-sigemad.svc.cluster.local,1433;Initial Catalog=Sigemad;user id=sa;password=P@s$w0rd;TrustServerCertificate=true;MultipleActiveResultSets=true;"
             - name: ConnectionStrings__IdentityConnectionString
               value: "Data Source=sqlserver.ns-sigemad.svc.cluster.local,1433;Initial Catalog=Sigemad;user id=sa;password=P@s$w0rd;TrustServerCertificate=true;MultipleActiveResultSets=true;"
+            - name: GIT_BRANCH
+              value: "refs/heads/develop"
