@@ -1,9 +1,3 @@
-# geoserver-service.yaml
-apiVersion: v1
-kind: Service
-metadata:
-  name: svc-geoserver
-  namespace: ns-sigemad
 spec:
   selector:
     app: geoserver
@@ -11,3 +5,5 @@ spec:
     - protocol: TCP
       port: 8080
       targetPort: 8080
+      nodePort: 30081
+  type: NodePort
